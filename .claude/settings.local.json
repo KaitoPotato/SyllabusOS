@@ -3,7 +3,10 @@
     "allow": [
       "Bash(pkill -f \"next dev\")",
       "Bash(pkill -f \"next-server\")",
-      "Bash(rm -f /tmp/sos-dev.log)"
+      "Bash(rm -f /tmp/sos-dev.log)",
+      "Bash(npm run *)",
+      "Bash(node -e ' *)",
+      "Bash(node --experimental-strip-types --input-type=module -e ' *)"
     ]
   }
 }

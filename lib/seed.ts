@@ -11,16 +11,28 @@ import type {
   Task,
 } from "./types";
 
-// Term spans Aug 26, 2025 – Dec 12, 2025 so the dashboard always has rich, plausible content
-// regardless of when a demo viewer loads the app.
-const TERM_START = "2025-08-26";
-const TERM_END = "2025-12-12";
+// The seed below is authored against a fictional Fall 2025 term. To keep the demo fresh
+// regardless of when it's loaded, every date is shifted at runtime so "today" lands
+// about 1/3 of the way through the term. This way the dashboard, study plan, and
+// upcoming-tasks queries always have a healthy mix of past and future content.
+const SEED_TERM_START_RAW = Date.UTC(2025, 7, 26); // Aug 26, 2025
+const SEED_TERM_END_RAW = Date.UTC(2025, 11, 12); // Dec 12, 2025
+const SEED_ANCHOR_RAW = Date.UTC(2025, 8, 30); // Sept 30, 2025 — roughly week 6
+
+function offsetDays(): number {
+  // Whole-day offset between today and the seed anchor.
+  return Math.round((Date.now() - SEED_ANCHOR_RAW) / 86400000);
+}
+
+function shiftedISO(rawMs: number): string {
+  return new Date(rawMs + offsetDays() * 86400000).toISOString();
+}
 
 const COURSE_PALETTE = ["#7044e5", "#ef6c8a", "#3aa6a6", "#e9a23b", "#3b82f6", "#10b981"];
 
 // ---------- helpers ----------
 const iso = (y: number, m: number, d: number, hh = 23, mm = 59) =>
-  new Date(Date.UTC(y, m - 1, d, hh, mm)).toISOString();
+  shiftedISO(Date.UTC(y, m - 1, d, hh, mm));
 
 type CoursePack = {
   course: Course;
@@ -529,8 +541,8 @@ function baseProfile(persona: Persona, overrides: Partial<Profile> = {}): Profil
     university: "University of Southern California",
     major: "Undeclared",
     year: "Freshman",
-    termStartDate: TERM_START,
-    termEndDate: TERM_END,
+    termStartDate: shiftedISO(SEED_TERM_START_RAW).slice(0, 10),
+    termEndDate: shiftedISO(SEED_TERM_END_RAW).slice(0, 10),
     notificationPrefs: { email: true, push: false, daysAhead: 3 },
     coursePalette: COURSE_PALETTE,
     plan: "free",
@@ -568,7 +580,7 @@ export function buildDemos(): Demo[] {
           "Hi all — I am pushing Essay 2 to Thursday Oct 16 to give you the long weekend. — Prof. Wallace",
         sender: "wallace@usc.edu",
         subject: "Essay 2 deadline shift",
-        receivedAt: iso(2025, 10, 8, 19, 30),
+        receivedAt: iso(2025, 9, 26, 19, 30),
         status: "pending",
       },
     ],
@@ -599,7 +611,7 @@ export function buildDemos(): Demo[] {
         announcementText: "HW4 deadline moved to Monday Oct 27 due to lecture cancellation Tuesday.",
         sender: "adamchik@usc.edu",
         subject: "HW4 deadline update",
-        receivedAt: iso(2025, 10, 21, 16, 10),
+        receivedAt: iso(2025, 9, 27, 16, 10),
         status: "pending",
       },
       {
@@ -612,7 +624,7 @@ export function buildDemos(): Demo[] {
           "Optional bonus lab available — ADC sampling lab worth +3% extra credit, due Nov 7.",
         sender: "singh@usc.edu",
         subject: "Bonus lab announcement",
-        receivedAt: iso(2025, 11, 1, 10, 0),
+        receivedAt: iso(2025, 9, 29, 10, 0),
         status: "pending",
       },
     ],
@@ -734,4 +746,6 @@ export const PERSONA_META: Record<Persona, { label: string; emoji: string; tag: 
   },
 };
 
-export { TERM_START, TERM_END, COURSE_PALETTE };
+export const TERM_START = shiftedISO(SEED_TERM_START_RAW).slice(0, 10);
+export const TERM_END = shiftedISO(SEED_TERM_END_RAW).slice(0, 10);
+export { COURSE_PALETTE };

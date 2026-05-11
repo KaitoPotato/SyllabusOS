@@ -247,6 +247,10 @@ export const useStore = create<AppState>()(
     }),
     {
       name: "syllabusos-v2",
+      // Bumped because seed-data dates are now anchored to "today" at runtime. Any
+      // previously persisted state references a hardcoded Fall 2025 term that no
+      // longer matches the in-memory seed, so it must be discarded.
+      version: 2,
       onRehydrateStorage: () => (state) => {
         if (state) state.hydrated = true;
       },
