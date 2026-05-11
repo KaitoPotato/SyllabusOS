@@ -6,7 +6,12 @@
       "Bash(rm -f /tmp/sos-dev.log)",
       "Bash(npm run *)",
       "Bash(node -e ' *)",
-      "Bash(node --experimental-strip-types --input-type=module -e ' *)"
+      "Bash(node --experimental-strip-types --input-type=module -e ' *)",
+      "Bash(pip3 install *)",
+      "Bash(python3 -c \"import reportlab; print\\(reportlab.__version__\\)\")",
+      "Bash(python3 -m venv /tmp/pdfenv)",
+      "Bash(/tmp/pdfenv/bin/pip install *)",
+      "Bash(/tmp/pdfenv/bin/python /tmp/build_roadmap_v3.py)"
     ]
   }
 }
