@@ -1,10 +1,9 @@
-# SyllabusOS v2
-
+# SyllabusOS 
 > Turn messy syllabi into a structured academic planner that stays synced over the term.
 
 SyllabusOS v2 is a full-stack student planning product. Students upload their syllabi (PDF or pasted text); SyllabusOS extracts every deadline, exam, grading weight, and policy, renders a workload heatmap across the whole term, and stays synced when professors change plans mid-semester via forwarded announcements.
 
-This repo implements the **v2 feature set** described in *TAC459 Team C Project Roadmap v2*: external calendar export, gradebook-based prioritization, translation support, and a paid tier for personal commitments.
+This repo belongs to Team C: Camille Dove, Cooper Lenahan, Eileen Yang, Jack Donell, Pinru Wang, Suin Lee, Vivian Ting
 
 ---
 
